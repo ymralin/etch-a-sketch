@@ -1,0 +1,55 @@
+.sketchBoard {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    width: 320px;
+    height: 320px;
+}
+
+.divCell {
+    border: solid black 1px;
+}
+
+.painted {
+    background-color: black;
+}
+
+.btn {
+    border: solid black 2px;
+    width: 100px;
+    height: 50px;
+    margin: 10px;
+    text-align: center;
+    transition: all 0.1s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#contentContainer {
+    display: flex;
+}
+
+.buttonContainer {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggled {
+    border: solid rgba(248, 174, 16, 0.747) 2px;
+    box-shadow: 2px 2px 2px  rgba(243, 190, 76, 0.911) ;
+    background-color: rgba(250, 234, 201, 0.747);
+    font-weight: bold;
+}
+
+.clicked {
+    transform: scale(1.1);
+}
+
+#mainContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

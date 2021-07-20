@@ -1,12 +1,11 @@
 .sketchBoard {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    width: 320px;
-    height: 320px;
+    
 }
 
 .divCell {
-    border: solid black 1px;
+    border: solid black 1px ;
 }
 
 .painted {
@@ -27,6 +26,8 @@
 
 #contentContainer {
     display: flex;
+    height: 480px;
+    /* align-items: center; */
 }
 
 .buttonContainer {
@@ -52,4 +53,25 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.settings {
+    display: flex;
+    margin-right: 10px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.settings p {
+    margin: 5px;
+}
+
+.settings h2 {
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+#resizeBtn {
+    margin-top: 20px;
 }

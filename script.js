@@ -1,27 +1,25 @@
 function paintingAction(e){
-    console.log(this)
-    if(painting==true){
-        this.classList.add('painted');
-    } else{
-        this.classList.remove('painted');
-    }
+    if(currentPaintMode=='black'){
+        this.style.backgroundColor = 'black';
+        this.style.border = 'solid 1px black'
+    } else if (currentPaintMode=='red') {
+        this.style.backgroundColor = 'red';
+        this.style.border = 'solid 1px red'
+    } else if (currentPaintMode=='erase') {
+        this.style.removeProperty('background-color');
+        this.style.border = 'solid 1px black';
+    } else if (currentPaintMode=='random') {
+        let c1='rgb(' + Math.floor(Math.random()*256) + ',' + Math.floor(Math.random()*256) + ',' + Math.floor(Math.random()*256) + ')';
+        this.style.backgroundColor = c1;
+        this.style.border = 'solid 1px ' + c1;
+    };
+    checkToggle();
 };
-
-function paint(e) {
-    this.classList.add('painted');
-
-};
-
-function erase(e) {
-    this.classList.remove('painted');
-};
-
-let painting=true;
 
 const settingsContainer = document.querySelector('.setting')
 const buttonContainer = document.querySelector('.buttonContainer');
 
-for (i=0; i<2; i++){
+for (i=0; i<4; i++){
     const btn = document.createElement('div');
     btn.classList.add('btn');
     btn.id='btn' +(i+1);
@@ -32,34 +30,65 @@ for (i=0; i<2; i++){
 
 function clicked(e) {
     this.classList.add('clicked');
-    // console.log(this);
-}
+};
 
 function removeTransition(e){
     this.classList.remove('clicked')
-}
+};
 
 const btn1 = document.querySelector('#btn1');
 const btn2 = document.querySelector('#btn2');
-btn1.textContent = 'Eraser'
-btn2.textContent = 'Reset sketch'
-btn1.addEventListener('click', togglePainting);
-btn2.addEventListener('click', resetSketch);
+const btn3 = document.querySelector('#btn3');
+const btn4 = document.querySelector('#btn4');
 
-function togglePainting(){
-    if(painting==true){
-        painting=false;
-        btn1.classList.add('toggled');
-    } else{
-        painting=true;
-        btn1.classList.remove('toggled');
+let paintModes=['black', 'red', 'erase', 'random']; //red was made for testing and left here just in case...
+let currentPaintMode = paintModes[0];
 
-    }
+btn1.textContent = 'Black'
+btn2.textContent = 'Random color'
+btn3.textContent = 'Eraser'
+btn4.textContent = 'Reset sketch'
+btn1.addEventListener('click', blackColor);
+btn2.addEventListener('click', randomColor);
+btn3.addEventListener('click', eraser);
+btn4.addEventListener('click', resetSketch);
+
+function blackColor() {
+    currentPaintMode = paintModes[0];
+    checkToggle();
 };
 
+function randomColor() {
+    currentPaintMode = paintModes[3];
+    checkToggle();
+};
+
+function eraser() {
+    currentPaintMode = paintModes[2];
+    checkToggle();
+};
+
+function checkToggle() {
+    if(currentPaintMode == paintModes[0]) {
+        btn1.classList.add('toggled')
+        btn3.classList.remove('toggled')
+        btn2.classList.remove('toggled')
+    } else if(currentPaintMode == paintModes[2]) {
+        btn1.classList.remove('toggled')
+        btn3.classList.add('toggled')
+        btn2.classList.remove('toggled')
+    } else if(currentPaintMode == paintModes[3]) {
+        btn1.classList.remove('toggled')
+        btn2.classList.add('toggled')
+        btn3.classList.remove('toggled')
+    }
+}
 function resetSketch() {
     const cells=document.querySelectorAll('.divCell');
-    cells.forEach(cell => cell.classList.remove('painted'))
+    cells.forEach(cell => cell.style.removeProperty('background-color'));
+    cells.forEach(cell => cell.style.border = 'solid 1px black');
+    currentPaintMode = paintModes[0];
+    checkToggle();
 };
 
 const resizeBtn = document.querySelector('#resizeBtn')
@@ -80,13 +109,10 @@ function resizeBoard() {
                 colNumInput.value = "";
                 rowNumInput.value = "";
                 painting=true;
-                btn1.classList.remove('toggled');
-            
-            }
-        }
-    }
-
-}
+            };
+        };
+    };
+};
 
 function drawBoard(cols, rows) {
     clearBoard();
@@ -119,3 +145,4 @@ function clearBoard() {
 
 drawBoard(16,16);
 
+checkToggle();

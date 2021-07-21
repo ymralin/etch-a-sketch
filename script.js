@@ -104,8 +104,8 @@ function drawBoard(cols, rows) {
     clearBoard();
     
     const sketchBoard = document.querySelector('.sketchBoard');
-    sketchBoard.style.width = '640px'
-    sketchBoard.style.height = rows/cols * 640 + 'px'
+    sketchBoard.style.width = '480px'
+    sketchBoard.style.height = rows/cols * 480 + 'px'
     for (i=0; i<cols; i++) {
         for (j=0; j<rows; j++) {
             const div = document.createElement('div');

@@ -1,11 +1,3 @@
-// const sketchBoard = document.querySelector('.sketchBoard');
-// for (i=0; i<256; i++) {
-//     const div = document.createElement('div');
-//     div.className = 'divCell';
-//     sketchBoard.appendChild(div);
-//         div.addEventListener('mouseover', paintingAction);
-// }
-
 function paintingAction(e){
     console.log(this)
     if(painting==true){
@@ -37,8 +29,6 @@ for (i=0; i<2; i++){
     btn.addEventListener('click', clicked);
     btn.addEventListener('transitionend', removeTransition);
 };
-
-
 
 function clicked(e) {
     this.classList.add('clicked');
@@ -77,8 +67,6 @@ resizeBtn.addEventListener('click', clicked);
 resizeBtn.addEventListener('transitionend', removeTransition);
 resizeBtn.textContent = 'Resize';
 resizeBtn.addEventListener('click', resizeBoard);
-
-
 
 function resizeBoard() {
     const colNumInput = document.querySelector('#colsNum');

@@ -1,25 +1,33 @@
 function paintingAction(e){
     if(currentPaintMode=='black'){
-        this.style.backgroundColor = 'black';
-        this.style.border = 'solid 1px black'
+        this.style.backgroundColor = 'rgb(0,0,0)';
+        this.style.border = 'solid 1px rgb(0,0,0)'
     } else if (currentPaintMode=='red') {
         this.style.backgroundColor = 'red';
         this.style.border = 'solid 1px red'
     } else if (currentPaintMode=='erase') {
-        this.style.removeProperty('background-color');
-        this.style.border = 'solid 1px black';
+        this.style.backgroundColor = 'rgb(255,255,255)';
+        this.style.border = 'solid 1px rgb(0,0,0)';
     } else if (currentPaintMode=='random') {
         let c1='rgb(' + Math.floor(Math.random()*256) + ',' + Math.floor(Math.random()*256) + ',' + Math.floor(Math.random()*256) + ')';
         this.style.backgroundColor = c1;
         this.style.border = 'solid 1px ' + c1;
-    };
+    } else if (currentPaintMode=='shade') {
+        let curRGB = this.style.backgroundColor.replace('rgb(', '').replace(')','').split(',');
+        let R = curRGB[0];
+        let G = curRGB[1];
+        let B = curRGB[2];
+        let c1='rgb(' + R*0.9 + ',' + G*0.9 + ',' + B*0.9 + ')';
+        this.style.backgroundColor = c1;
+        this.style.border = 'solid 1px ' + c1;
+    }
     checkToggle();
 };
 
 const settingsContainer = document.querySelector('.setting')
 const buttonContainer = document.querySelector('.buttonContainer');
 
-for (i=0; i<4; i++){
+for (i=0; i<5; i++){
     const btn = document.createElement('div');
     btn.classList.add('btn');
     btn.id='btn' +(i+1);
@@ -40,18 +48,22 @@ const btn1 = document.querySelector('#btn1');
 const btn2 = document.querySelector('#btn2');
 const btn3 = document.querySelector('#btn3');
 const btn4 = document.querySelector('#btn4');
+const btn5 = document.querySelector('#btn5');
 
-let paintModes=['black', 'red', 'erase', 'random']; //red was made for testing and left here just in case...
+let paintModes=['black', 'red', 'erase', 'random', 'shade']; //red was made for testing and left here just in case...
 let currentPaintMode = paintModes[0];
 
 btn1.textContent = 'Black'
 btn2.textContent = 'Random color'
 btn3.textContent = 'Eraser'
-btn4.textContent = 'Reset sketch'
+btn4.textContent = 'Shade'
+btn5.textContent = 'Reset sketch'
+
 btn1.addEventListener('click', blackColor);
 btn2.addEventListener('click', randomColor);
 btn3.addEventListener('click', eraser);
-btn4.addEventListener('click', resetSketch);
+btn4.addEventListener('click', shade);
+btn5.addEventListener('click', resetSketch);
 
 function blackColor() {
     currentPaintMode = paintModes[0];
@@ -68,24 +80,38 @@ function eraser() {
     checkToggle();
 };
 
+function shade() {
+    currentPaintMode = paintModes[4];
+    checkToggle();
+
+};
+
 function checkToggle() {
     if(currentPaintMode == paintModes[0]) {
         btn1.classList.add('toggled')
-        btn3.classList.remove('toggled')
         btn2.classList.remove('toggled')
+        btn3.classList.remove('toggled')
+        btn4.classList.remove('toggled')
     } else if(currentPaintMode == paintModes[2]) {
         btn1.classList.remove('toggled')
-        btn3.classList.add('toggled')
         btn2.classList.remove('toggled')
+        btn3.classList.add('toggled')
+        btn4.classList.remove('toggled')
     } else if(currentPaintMode == paintModes[3]) {
         btn1.classList.remove('toggled')
         btn2.classList.add('toggled')
         btn3.classList.remove('toggled')
+        btn4.classList.remove('toggled')
+    } else if(currentPaintMode == paintModes[4]) {
+        btn1.classList.remove('toggled')
+        btn2.classList.remove('toggled')
+        btn3.classList.remove('toggled')
+        btn4.classList.add('toggled')
     }
 }
 function resetSketch() {
     const cells=document.querySelectorAll('.divCell');
-    cells.forEach(cell => cell.style.removeProperty('background-color'));
+    cells.forEach(cell => cell.style.backgroundColor = 'rgb(255,255,255)');
     cells.forEach(cell => cell.style.border = 'solid 1px black');
     currentPaintMode = paintModes[0];
     checkToggle();
@@ -129,6 +155,7 @@ function drawBoard(cols, rows) {
             div.addEventListener('mouseover', paintingAction);
             div.style.width = sketchBoard.style.width / cols
             div.style.height = sketchBoard.style.height / rows
+            div.style.backgroundColor = 'rgb(255,255,255)'
         }
     }
     let cT
